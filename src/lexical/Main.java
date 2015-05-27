@@ -103,5 +103,8 @@ public class Main {
 		symnames[sym.TRUE] = "TRUE";
 		symnames[sym.FALSE] = "FALSE";
 		symnames[sym.NEW] = "NEW";
+		symnames[sym.TEST] = "TEST";
+		symnames[sym.ASSERT] = "ASSERT";
+		symnames[sym.FIXTURE] = "FIXTURE";
 	}
 }

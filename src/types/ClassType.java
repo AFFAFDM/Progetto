@@ -60,6 +60,9 @@ public final class ClassType extends ReferenceType {
 
 	private final Set<ConstructorSignature> constructors = new HashSet<>();
 
+	private final Map<String, TestSignature> tests = new HashMap<>();
+	
+	private final Set<FixtureSignature> fixtures = new HashSet<>();
 	/**
 	 * A map from method symbols to the set of signatures of the methods with
 	 * that name. Because of overloading, more than one method might have a given name.
@@ -291,6 +294,16 @@ public final class ClassType extends ReferenceType {
 	public final void addConstructor(ConstructorSignature sig) {
 		constructors.add(sig);
 	}
+	
+	public final void addTest(String name, TestSignature sig, int pos) {
+		if(tests.containsKey(name))
+			errorMsg.error( pos ,"test " + name +" already declared");
+		tests.put(name, sig);
+	}
+	
+	public final void addFixture(FixtureSignature sig) {
+		fixtures.add(sig);
+	}
 
 	/**
 	 * Adds a method to this class. If a method with the given name
@@ -328,6 +341,14 @@ public final class ClassType extends ReferenceType {
 
 	public Set<ConstructorSignature> getConstructors() {
 		return constructors;
+	}
+	
+	public Map<String, TestSignature> getTests() {
+		return tests;
+	}
+	
+	public Set<FixtureSignature> getFixtures() {
+		return fixtures;
 	}
 
 	/**
@@ -398,6 +419,10 @@ public final class ClassType extends ReferenceType {
 
 		// otherwise, we return <tt>null</tt>
 		return null;
+	}
+	
+	public TestSignature testLookup(String name) {
+		return tests.get(name);
 	}
 
 	/**

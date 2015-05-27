@@ -68,7 +68,7 @@ terminal CLASS, EXTENDS, FIELD, METHOD, CONSTRUCTOR, NEW,
 	 LBRACK, RBRACK, LBRACE, RBRACE, DOT, PLUS, MINUS, 
 	 TIMES, DIVIDE, EQ, NEQ, LT, LE, GT, GE, AND, OR, NOT,
 	 ASSIGN, ARRAYSYMBOL, IF, THEN, ELSE, WHILE, FOR, 
-	 RETURN, NIL, TRUE, FALSE, UMINUS;
+	 RETURN, NIL, TRUE, FALSE, UMINUS, TEST, ASSERT, FIXTURE;
 
 
 //           abstract syntax class   non-terminal
@@ -149,7 +149,6 @@ class ::=
      {: RESULT = new ClassDefinition
 	(cleft, name, superclass, declarations); :} ;
 
-
 // a sequence of fields, constructors or methods declarations
 
 class_members ::=
@@ -162,7 +161,11 @@ class_members ::=
    | METHOD:m typeplus:returnType ID:name LPAREN formals:formals RPAREN
        com:body class_members:next
      {: RESULT = new MethodDeclaration
-	(mleft, returnType, name, formals, body, next); :} ;
+	(mleft, returnType, name, formals, body, next); :}
+   | TEST:t ID:name com:body class_members:next 
+     {: RESULT = new TestDeclaration(tleft,name,body,next); :}
+   | FIXTURE:f com:c class_members:next
+   	 {: RESULT = null; :};
 
 // a comma-separated and possibly empty list
 // of formal parameters of a method or constructor
@@ -206,7 +209,10 @@ com ::=
    | LBRACE:p RBRACE
      {: RESULT = new Skip(pleft); :}
    | exp:receiver DOT:d ID:name LPAREN expseq:actuals RPAREN
-     {: RESULT = new MethodCallCommand(dleft, receiver, name, actuals); :} ;
+     {: RESULT = new MethodCallCommand(dleft, receiver, name, actuals); :}
+   | ASSERT:a LPAREN exp:condition RPAREN
+   	 {: RESULT = new Assert(aleft,condition); :} ;   
+   
 
 // a non-empty sequence of commands
 
@@ -217,7 +223,7 @@ comseq ::=
      {: RESULT = new CommandSeq(cleft,f,s); :} ;
 
 // an expression, i.e., something which yields a value
-
+	
 exp ::=
      lvalue:lvalue
      {: RESULT = lvalue; :}

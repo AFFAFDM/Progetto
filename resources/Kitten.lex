@@ -154,6 +154,9 @@ String myString = "";
 <YYINITIAL>method       {return tok(sym.METHOD, null);}
 <YYINITIAL>field        {return tok(sym.FIELD, null);}
 <YYINITIAL>constructor  {return tok(sym.CONSTRUCTOR, null);}
+<YYINITIAL>test         {return tok(sym.TEST, null);}
+<YYINITIAL>assert       {return tok(sym.ASSERT, null);}
+<YYINITIAL>fixture      {return tok(sym.FIXTURE, null);}
 <YYINITIAL>if           {return tok(sym.IF, null);}
 <YYINITIAL>then         {return tok(sym.THEN, null);}
 <YYINITIAL>else         {return tok(sym.ELSE, null);}
