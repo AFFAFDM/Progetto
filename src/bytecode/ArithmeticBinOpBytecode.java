@@ -20,10 +20,9 @@ public abstract class ArithmeticBinOpBytecode extends BinOpBytecode {
 	private final NumericalType type;
 
 	/**
-	 * Constructs a list of instructions made up of a single bytecode that
-	 * computes a binary arithmetic operation on the top two elements of the stack.
+	 * Constructs a bytecode that computes a binary arithmetic operation on the top two
+	 * elements of the stack.
 	 *
-	 * @param where the method or constructor where this bytecode occurs
 	 * @param type the semantical type of the top two values of the stack
 	 */
 

@@ -40,7 +40,7 @@ parser code {:
  */
 
   public void syntax_error(java_cup.runtime.Symbol token) {
-    lexer.getErrorMsg().error(token.left,"syntax error");
+    getErrorMsg().error(token.left, "syntax error");
   }
 
 /**
@@ -126,7 +126,7 @@ type ::=
    | FLOAT:f
      {: RESULT = new FloatTypeExpression(fleft); :}
    | type:t ARRAYSYMBOL:a
-     {: RESULT = new ArrayTypeExpression(aleft,t); :} ;
+     {: RESULT = new ArrayTypeExpression(aleft, t); :} ;
 
 
 // Kitten types including VOID

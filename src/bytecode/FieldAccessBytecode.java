@@ -8,7 +8,7 @@ import types.FieldSignature;
  * @author <A HREF="mailto:fausto.spoto@univr.it">Fausto Spoto</A>
  */
 
-public abstract class FieldAccessBytecode extends NonCallingSequentialBytecode {
+public abstract class FieldAccessBytecode extends SequentialBytecode {
 
 	/**
 	 * Builds a bytecode that accesses a field.

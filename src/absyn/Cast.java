@@ -2,12 +2,11 @@ package absyn;
 
 import java.io.FileWriter;
 
-import types.Type;
-import types.NumericalType;
-import types.ReferenceType;
-import types.CodeSignature;
 import semantical.TypeChecker;
 import translation.Block;
+import types.NumericalType;
+import types.ReferenceType;
+import types.Type;
 import bytecode.CAST;
 
 /**
@@ -121,18 +120,18 @@ public class Cast extends Expression {
      * modified. Namely, it generates the code which starts with<br>
      * <br>
      * <i>translation of {@link #expression}</i><br>
-     * <tt>cast from {@code expression.getStaticType()} into {@code getStaticType()}</tt><br>
+     * {@code cast from expression.getStaticType() into getStaticType()}</tt><br>
      * <br>
      * and continues with the given {@code continuation}.
      *
      * @param where the method or constructor where this expression occurs
      * @param continuation the code executed after this expression
      * @return the code which evaluates this expression and continues
-     *         with <tt>continuation</tt>
+     *         with {@code continuation}
      */
 
     @Override
-    public Block translate(CodeSignature where, Block continuation) {
+    public Block translate(Block continuation) {
     	Type fromType = expression.getStaticType();
 
     	// we get the type towards which this expression is cast
@@ -140,11 +139,9 @@ public class Cast extends Expression {
 
     	if (intoType instanceof NumericalType)
     		return expression.translate
-   				(where, new CAST((NumericalType) fromType, (NumericalType) intoType)
-   				.followedBy(continuation));
+   				(new CAST((NumericalType) fromType, (NumericalType) intoType).followedBy(continuation));
     	else
     		return expression.translate
-   				(where, new CAST((ReferenceType) fromType, (ReferenceType) intoType)
-   				.followedBy(continuation));
+   				(new CAST((ReferenceType) fromType, (ReferenceType) intoType).followedBy(continuation));
     }
 }

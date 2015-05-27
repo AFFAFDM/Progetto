@@ -1,6 +1,5 @@
 package absyn;
 
-import types.CodeSignature;
 import semantical.TypeChecker;
 import translation.Block;
 
@@ -54,13 +53,12 @@ public class Skip extends Command {
 	/**
 	 * Translates this command into intermediate Kitten bytecode.
 	 *
-	 * @param where the method or constructor where this expression occurs
 	 * @param continuation the continuation to be executed after this command
 	 * @return just {@code continuation}
 	 */
 
 	@Override
-	public Block translate(CodeSignature where, Block continuation) {
+	public Block translate(Block continuation) {
 		return continuation;
 	}
 }

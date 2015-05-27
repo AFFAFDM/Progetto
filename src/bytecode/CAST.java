@@ -26,7 +26,7 @@ import types.Type;
  * @author <A HREF="mailto:fausto.spoto@univr.it">Fausto Spoto</A>
  */
 
-public class CAST extends NonCallingSequentialBytecode {
+public class CAST extends SequentialBytecode {
 
 	/**
 	 * The original, static type of the top of the stack.

@@ -14,7 +14,7 @@ import types.Type;
  * @author <A HREF="mailto:fausto.spoto@univr.it">Fausto Spoto</A>
  */
 
-public class DUP extends NonCallingSequentialBytecode {
+public class DUP extends SequentialBytecode {
 
 	/**
 	 * The type of the element which is duplicated.

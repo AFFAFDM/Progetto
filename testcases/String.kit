@@ -1,41 +1,44 @@
 /* This class implements Kitten strings. All constructors and methods are
-   implemented through native Java code */
+   implemented through native Java code inside runtime/String.java */
 
 class String {
-  /* crea una stringa vuota: BUILTIN */
+  /* yields the empty string */
   constructor () {}
 
-  /* clona una stringa */
+  /* clones this string */
   constructor(String other) {}
 
-  /* la lunghezza della stringa */
+  /* yields the length of this string */
   method int length() return 0
 
-  /* converte nell'intero rappresentato dalla stringa */
+  /* translates this string into an integer */
   method int toInt() return 0
 
-  /* converte nel float rappresentato dalla stringa */
+  /* translates this string into a float */
   method float toFloat() return 0
 
-  /* vero se e solo se "this" e' uguale a "other" */
+  /* tests string equality */
   method boolean equals(String other) return false
  
-  /* stampa la stringa a video */
+  /* prints this string to the standard output */
   method void output() {}
 
-  /* legge una sequenza di caratteri (fino al primo newline)
-     da tastiera e la memorizza nella stringa */
+  /* reads a sequence of character from the standard input
+     (until the first newline character) and stores it in the string */
   method void input() {}
 
-  /* ritorna la concatenazione di "this" e poi "s" */
+  /* yields the concatenation of this and then s */
   method String concat(String s) return ""
 
-  /* ritorna la concatenazione di "this" e poi "f" */
+  /* yields the concatenation of this and then f */
   method String concat(float f) return ""
 
-  /* ritorna la concatenazione di "this" e poi "i" */
+  /* yields the concatenation of this and then i */
   method String concat(int i) return ""
 
-  /* ritorna la concatenazione di "this" e poi "b" */
+  /* yields the concatenation of this and then b */
   method String concat(boolean b) return ""
+
+  /* yields the substring from start (included) to end (excluded) */
+  method String substring(int start, int end) return ""
 }

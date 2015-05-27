@@ -1,10 +1,9 @@
 package absyn;
 
-import types.NilType;
-import types.Type;
-import types.CodeSignature;
 import semantical.TypeChecker;
 import translation.Block;
+import types.NilType;
+import types.Type;
 import bytecode.CONST;
 
 /**
@@ -46,13 +45,12 @@ public class Nil extends Literal {
 	 * that loads on the stack the value {@code nil})
 	 * followed by the given {@code continuation}.
 	 *
-	 * @param where the method or constructor where this expression occurs
 	 * @param continuation the code executed after this expression
 	 * @return the code which evaluates this expression and continues with {@code continuation}
 	 */
 
 	@Override
-	public Block translate(CodeSignature where, Block continuation) {
+	public Block translate(Block continuation) {
 		return new CONST().followedBy(continuation);
 	}
 }

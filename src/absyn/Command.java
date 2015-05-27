@@ -3,7 +3,6 @@ package absyn;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import types.CodeSignature;
 import semantical.TypeChecker;
 import translation.Block;
 
@@ -126,12 +125,11 @@ public abstract class Command extends Absyn {
 	 * a code that executes the command by leaving the stack unchanged, exactly as it
 	 * were before the execution of the command.
 	 *
-	 * @param where the method or constructor where the command occurs
 	 * @param continuation the continuation to be executed after this command
 	 * @return the code executing this command
 	 */
 
-	public abstract Block translate(CodeSignature where, Block continuation);
+	public abstract Block translate(Block continuation);
 
 	/**
 	 * Outputs an error message to the user, by using the type-checker
@@ -141,6 +139,6 @@ public abstract class Command extends Absyn {
 	 */
 
 	protected void error(String msg) {
-		error(checker,msg);
+		error(checker, msg);
 	}
 }

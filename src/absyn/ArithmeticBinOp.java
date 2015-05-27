@@ -2,7 +2,6 @@ package absyn;
 
 import semantical.TypeChecker;
 import types.FloatType;
-import types.IntType;
 import types.Type;
 
 /**
@@ -47,8 +46,7 @@ public abstract class ArithmeticBinOp extends BinOp {
 		// both sides of the operation must have int or
 		// float type. The type of the binary operation will then
 		// be the least common supertype of the types of the two sides
-		if ((leftType == IntType.INSTANCE || leftType == FloatType.INSTANCE) &&
-				(rightType == IntType.INSTANCE || rightType == FloatType.INSTANCE))
+		if (leftType.canBeAssignedTo(FloatType.INSTANCE) && rightType.canBeAssignedTo(FloatType.INSTANCE))
 			return leftType.leastCommonSupertype(rightType);
 		else
 			return error("numerical argument required");

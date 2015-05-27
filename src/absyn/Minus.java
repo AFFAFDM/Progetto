@@ -2,12 +2,11 @@ package absyn;
 
 import java.io.FileWriter;
 
+import semantical.TypeChecker;
+import translation.Block;
 import types.FloatType;
 import types.IntType;
 import types.Type;
-import types.CodeSignature;
-import semantical.TypeChecker;
-import translation.Block;
 import bytecode.NEG;
 
 /**
@@ -89,13 +88,12 @@ public class Minus extends Expression {
 	 * {@link #expression}, followed by the {@code neg} bytecode)
 	 * followed by the given {@code continuation}.
 	 *
-	 * @param where the method or constructor where this expression occurs
 	 * @param continuation the code executed after this expression
 	 * @return the code that evaluates this expression and continues with {@code continuation}
 	 */
 
 	@Override
-	public Block translate(CodeSignature where, Block continuation) {
-		return expression.translate(where, new NEG(IntType.INSTANCE).followedBy(continuation));
+	public Block translate(Block continuation) {
+		return expression.translate(new NEG(IntType.INSTANCE).followedBy(continuation));
 	}
 }

@@ -54,8 +54,7 @@ public class JavaClassGenerator extends ClassGen {
 	 * Builds a class generator for the given class type.
 	 *
 	 * @param clazz the class type
-	 * @param sigs a set of class member signatures. These are those that must be
-	 *             translated. If this is {@code null}, all class members are translated
+	 * @param sigs a set of class member signatures. These are those that must be translated
 	 */
 
 	public JavaClassGenerator(ClassType clazz, Set<ClassMemberSignature> sigs) {
@@ -74,18 +73,18 @@ public class JavaClassGenerator extends ClassGen {
 
 		// we add the fields
 		for (FieldSignature field: clazz.getFields().values())
-			if (sigs == null || sigs.contains(field))
+			if (sigs.contains(field))
 				field.createField(this);
 
 		// we add the constructors
 		for (ConstructorSignature constructor: clazz.getConstructors())
-			if (sigs == null || sigs.contains(constructor))
+			if (sigs.contains(constructor))
 				constructor.createConstructor(this);
 
 		// we add the methods
 		for (Set<MethodSignature> s: clazz.getMethods().values())
 			for (MethodSignature method: s)
-				if (sigs == null || sigs.contains(method))
+				if (sigs.contains(method))
 					method.createMethod(this);
 	}
 

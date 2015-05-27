@@ -16,7 +16,7 @@ import types.Type;
  * @author <A HREF="mailto:fausto.spoto@univr.it">Fausto Spoto</A>
  */
 
-public class NEWARRAY extends NonCallingSequentialBytecode {
+public class NEWARRAY extends SequentialBytecode {
 
 	/**
 	 * The type of the elements of the array.

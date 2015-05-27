@@ -2,7 +2,6 @@ package absyn;
 
 import java.io.FileWriter;
 
-import types.CodeSignature;
 import semantical.TypeChecker;
 import translation.Block;
 
@@ -97,14 +96,13 @@ public class LocalScope extends Command {
 	 * Kitten bytecode. Namely, it translates the {@link #body} of the
 	 * local scope with the given {@code continuation}.
 	 *
-	 * @param where the method or constructor where this expression occurs
 	 * @param continuation the continuation to be executed after this command
 	 * @return the code executing this command and then the {@code continuation}
 	 */
 
 	@Override
-	public Block translate(CodeSignature where, Block continuation) {
+	public Block translate(Block continuation) {
 		// we translate the body of the local scope with the given continuation
-		return body.translate(where,continuation);
+		return body.translate(continuation);
 	}
 }

@@ -12,7 +12,7 @@ class List {
   /* yields a list which is the concatenation of this and other */
   method List append(List l1)
     if (this.tail = nil) then return new List(this.head,l1)
-    else return new List(this.head,this.tail.append(l1))
+    else return new List(this.head, this.tail.append(l1))
 
   /* naive reverse */
   method List reverse()
@@ -21,7 +21,7 @@ class List {
 
   /* accumulator reverse */
   method List reverseAcc()
-    return this.reverseAux(new List(this.head,nil))
+    return this.reverseAux(new List(this.head, nil))
 
   method List reverseAux(List acc)
     if (this.tail = nil) then return acc

@@ -3,9 +3,8 @@ package absyn;
 import java.io.FileWriter;
 
 import semantical.TypeChecker;
-import types.Type;
-import types.CodeSignature;
 import translation.Block;
+import types.Type;
 
 /**
  * A node of abstract syntax representing an assignment command.
@@ -133,14 +132,14 @@ public class Assignment extends Command {
      * <br>
      * and continues with {@code continuation}.
      *
-     * @param where the method or constructor where this expression occurs
      * @param continuation the continuation to be executed after this command
      * @return the code executing this command and then {@code continuation}
      */
 
-    public Block translate(CodeSignature where, Block continuation) {
+    @Override
+    public Block translate(Block continuation) {
     	return lvalue.translateBeforeAssignment
-   			(where,rvalue.translateAs(where, lvalue.getStaticType(),
-    		lvalue.translateAfterAssignment(where, continuation)));
+   			(rvalue.translateAs(lvalue.getStaticType(),
+   				lvalue.translateAfterAssignment(continuation)));
     }
 }

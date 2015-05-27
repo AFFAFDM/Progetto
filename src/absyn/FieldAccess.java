@@ -2,12 +2,11 @@ package absyn;
 
 import java.io.FileWriter;
 
-import types.Type;
-import types.ClassType;
-import types.FieldSignature;
-import types.CodeSignature;
 import semantical.TypeChecker;
 import translation.Block;
+import types.ClassType;
+import types.FieldSignature;
+import types.Type;
 import bytecode.GETFIELD;
 import bytecode.PUTFIELD;
 
@@ -160,15 +159,14 @@ public class FieldAccess extends Lvalue {
      * <br>
      * followed by the given {@code continuation}.
      *
-     * @param where the method or constructor where this expression occurs
      * @param continuation the code executed after this expression
      * @return the code that evaluates this expression and continues
      *         with {@code continuation}
      */
 
     @Override
-    public Block translate(CodeSignature where, Block continuation) {
-    	return receiver.translate(where, new GETFIELD(field).followedBy(continuation));
+    public Block translate(Block continuation) {
+    	return receiver.translate(new GETFIELD(field).followedBy(continuation));
     }
 
     /**
@@ -176,14 +174,13 @@ public class FieldAccess extends Lvalue {
      * the evaluation of the rightvalue which is going to be assigned to this
      * variable. Namely, it translates {@link #receiver}.
      *
-     * @param where the method or constructor where this expression occurs
      * @param continuation the code which must be executed after this expression
      * @return the evaluation of {@link #receiver} followed by the given {@code continuation}
      */
 
     @Override
-    public Block translateBeforeAssignment(CodeSignature where, Block continuation) {
-    	return receiver.translate(where, continuation);
+    public Block translateBeforeAssignment(Block continuation) {
+    	return receiver.translate(continuation);
     }
 
     /**
@@ -191,13 +188,12 @@ public class FieldAccess extends Lvalue {
      * the evaluation of the rightvalue which is going to be assigned to this
      * variable. Namely, it generates a [@code putfield} bytecode.
      *
-     * @param where the method or constructor where this expression occurs
      * @param continuation the code which must be executed after this expression
      * @return a {@code putfield} bytecode followed by {@code continuation}
      */
 
     @Override
-    public Block translateAfterAssignment(CodeSignature where, Block continuation) {
+    public Block translateAfterAssignment(Block continuation) {
     	return new PUTFIELD(field).followedBy(continuation);
     }
 }

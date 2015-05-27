@@ -15,7 +15,7 @@ import types.Type;
  * @author <A HREF="mailto:fausto.spoto@univr.it">Fausto Spoto</A>
  */
 
-public class POP extends NonCallingSequentialBytecode {
+public class POP extends SequentialBytecode {
 
 	/**
 	 * The type of the value that is popped from the stack.

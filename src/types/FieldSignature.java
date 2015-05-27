@@ -39,7 +39,7 @@ public class FieldSignature extends ClassMemberSignature {
      */
 
     public FieldSignature(ClassType clazz, Type type, String name, FieldDeclaration abstractSyntax) {
-    	super(clazz,abstractSyntax);
+    	super(clazz, abstractSyntax);
 
     	this.type = type;
     	this.name = name;
@@ -96,7 +96,7 @@ public class FieldSignature extends ClassMemberSignature {
 
     public FieldInstruction createGETFIELD(JavaClassGenerator classGen) {
     	return classGen.getFactory().createGetField
-    		(getDefiningClass().toBCEL().toString(), name.toString(), type.toBCEL());
+    		(getDefiningClass().toBCEL().toString(), name, type.toBCEL());
     }
 
     /**
@@ -110,7 +110,7 @@ public class FieldSignature extends ClassMemberSignature {
 
     public FieldInstruction createPUTFIELD(JavaClassGenerator classGen) {
     	return classGen.getFactory().createPutField
-   			(getDefiningClass().toBCEL().toString(), name.toString(), type.toBCEL());
+   			(getDefiningClass().toBCEL().toString(), name, type.toBCEL());
     }
 
     /**
@@ -124,8 +124,8 @@ public class FieldSignature extends ClassMemberSignature {
     	classGen.addField(new FieldGen
    			(Constants.ACC_PUBLIC, // the field is public
 			getType().toBCEL(), // type
-			getName().toString(), // name
+			name,
 			classGen.getConstantPool()) // constant pool where it must be stored
-    	.getField());
+    		.getField());
     }
 }

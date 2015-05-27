@@ -8,7 +8,7 @@ package bytecode;
  * @author <A HREF="mailto:fausto.spoto@univr.it">Fausto Spoto</A>
  */
 
-public abstract class BinOpBytecode extends NonCallingSequentialBytecode {
+public abstract class BinOpBytecode extends SequentialBytecode {
 
 	/**
 	 * Constructs a list of instructions made up of a single bytecode that

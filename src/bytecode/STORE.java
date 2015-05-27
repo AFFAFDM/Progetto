@@ -15,7 +15,7 @@ import types.Type;
  * @author <A HREF="mailto:fausto.spoto@univr.it">Fausto Spoto</A>
  */
 
-public class STORE extends NonCallingSequentialBytecode {
+public class STORE extends SequentialBytecode {
 
 	/**
 	 * The number of the local variable that is assigned.

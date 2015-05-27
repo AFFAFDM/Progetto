@@ -1,6 +1,5 @@
 package absyn;
 
-import types.CodeSignature;
 import translation.Block;
 
 /**
@@ -28,24 +27,22 @@ public abstract class Lvalue extends Expression {
 	 * Generates the intermediate Kitten code which must be executed before
 	 * the evaluation of the rightvalue which is going to be assigned to this leftvalue.
 	 *
-	 * @param where the method or constructor where this expression occurs
 	 * @param continuation the code which must be executed after this expression. Usually,
 	 *                     this is the code that evaluates a rightvalue in an assignment
 	 * @return a code that is executed before the evaluation of a rightvalue that
 	 *         is going to be assigned to this leftvalue, followed by {@code continuation}
 	 */
 
-	public abstract Block translateBeforeAssignment(CodeSignature where, Block continuation);
+	public abstract Block translateBeforeAssignment(Block continuation);
 
 	/**
 	 * Generates the intermediate Kitten code that must be executed after the
 	 * evaluation of the rightvalue which is going to be assigned to this leftvalue.
 	 *
-	 * @param where the method or constructor where this expression occurs
 	 * @param continuation the code which must be executed after this expression
 	 * @return a code that is executed after the evaluation of a rightvalue that
 	 *         is going to be assigned to this leftvalue, followed by {@code continuation}
 	 */
 
-	public abstract Block translateAfterAssignment(CodeSignature where, Block continuation);
+	public abstract Block translateAfterAssignment(Block continuation);
 }

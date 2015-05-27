@@ -19,7 +19,7 @@ import types.Type;
  * @author <A HREF="mailto:fausto.spoto@univr.it">Fausto Spoto</A>
  */
 
-public class CONST extends NonCallingSequentialBytecode {
+public class CONST extends SequentialBytecode {
 
 	/**
 	 * The constant that is loaded on top of the stack.

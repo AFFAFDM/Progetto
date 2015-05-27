@@ -16,7 +16,7 @@ import types.Type;
  * @author <A HREF="mailto:fausto.spoto@univr.it">Fausto Spoto</A>
  */
 
-public class ARRAYSTORE extends NonCallingSequentialBytecode {
+public class ARRAYSTORE extends SequentialBytecode {
 
 	/**
 	 * The type of the elements of the array which is modified.

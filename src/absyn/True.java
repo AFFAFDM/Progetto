@@ -1,10 +1,9 @@
 package absyn;
 
 import semantical.TypeChecker;
+import translation.Block;
 import types.BooleanType;
 import types.Type;
-import types.CodeSignature;
-import translation.Block;
 import bytecode.CONST;
 
 /**
@@ -46,13 +45,12 @@ public class True extends Literal {
 	 * that loads on the stack the Boolean value <i>true</i>)
 	 * followed by the given {@code continuation}.
 	 *
-	 * @param where the method or constructor where this expression occurs
 	 * @param continuation the code executed after this expression
 	 * @return the code which evaluates this expression and continues with {@code continuation}
 	 */
 
 	@Override
-	public final Block translate(CodeSignature where, Block continuation) {
+	public final Block translate(Block continuation) {
 		return new CONST(true).followedBy(continuation);
 	}
 }

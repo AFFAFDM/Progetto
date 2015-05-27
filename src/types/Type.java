@@ -87,7 +87,7 @@ public abstract class Type {
 	 */
 
 	public boolean canBeAssignedToSpecial(Type other) {
-		// primitive types should redefine this
+		// primitive types and void should redefine this
 		return canBeAssignedTo(other);
 	}
 

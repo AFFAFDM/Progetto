@@ -2,11 +2,10 @@ package absyn;
 
 import java.io.FileWriter;
 
-import types.Type;
-import types.ArrayType;
-import types.CodeSignature;
 import semantical.TypeChecker;
 import translation.Block;
+import types.ArrayType;
+import types.Type;
 import bytecode.ARRAYLOAD;
 import bytecode.ARRAYSTORE;
 
@@ -128,16 +127,15 @@ public class ArrayAccess extends Lvalue {
 	 * <br>
 	 * followed by the given {@code continuation}.
 	 *
-	 * @param where the method or constructor where this expression occurs
 	 * @param continuation the code executed after this expression
 	 * @return the code that evaluates this expression and continues
 	 *         with {@code continuation}
 	 */
 
 	@Override
-	public Block translate(CodeSignature where, Block continuation) {
-		return array.translate(where, index.translate
-			(where, new ARRAYLOAD(getStaticType()).followedBy(continuation)));
+	public Block translate(Block continuation) {
+		return array.translate(index.translate
+			(new ARRAYLOAD(getStaticType()).followedBy(continuation)));
 	}
 
 	/**
@@ -146,15 +144,14 @@ public class ArrayAccess extends Lvalue {
 	 * variable. Namely, it translates the {@code array} and
 	 * the {@code index} of this array element access.
 	 *
-	 * @param where the method or constructor where this expression occurs
 	 * @param continuation the code which must be executed after this expression
 	 * @return the evaluation of {@code array} followed by that of
 	 *         {@code index} followed by the given {@code continuation}
 	 */
 
 	@Override
-	public Block translateBeforeAssignment(CodeSignature where, Block continuation) {
-		return array.translate(where, index.translate(where, continuation));
+	public Block translateBeforeAssignment(Block continuation) {
+		return array.translate(index.translate(continuation));
 	}
 
 	/**
@@ -162,13 +159,12 @@ public class ArrayAccess extends Lvalue {
 	 * the evaluation of the rightvalue which is going to be assigned to this
 	 * variable. Namely, it generates an {@code arraystore} bytecode.
 	 *
-	 * @param where the method or constructor where this expression occurs
 	 * @param continuation the code which must be executed after this expression
 	 * @return an {@code arraystore} bytecode followed by {@code continuation}
 	 */
 
 	@Override
-	public Block translateAfterAssignment(CodeSignature where, Block continuation) {
+	public Block translateAfterAssignment(Block continuation) {
 		return new ARRAYSTORE(getStaticType()).followedBy(continuation);
 	}
 }

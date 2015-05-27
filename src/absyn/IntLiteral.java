@@ -1,10 +1,9 @@
 package absyn;
 
-import types.IntType;
-import types.Type;
-import types.CodeSignature;
 import semantical.TypeChecker;
 import translation.Block;
+import types.IntType;
+import types.Type;
 import bytecode.CONST;
 
 /**
@@ -79,13 +78,12 @@ public class IntLiteral extends Literal {
 	 * literal expression) followed by the given {@code continuation}.
 	 * The original stack elements are not modified.
 	 *
-	 * @param where the method or constructor where this expression occurs
 	 * @param continuation the code executed after this expression
 	 * @return the code which evaluates this expression and continues with {@code continuation}
 	 */
 
 	@Override
-	public Block translate(CodeSignature where, Block continuation) {
+	public Block translate(Block continuation) {
 		return new CONST(value).followedBy(continuation);
 	}
 }

@@ -6,7 +6,6 @@ import java.util.Set;
 import semantical.TypeChecker;
 import translation.Block;
 import types.ClassType;
-import types.CodeSignature;
 import types.MethodSignature;
 import types.Type;
 import types.TypeList;
@@ -195,22 +194,21 @@ public class MethodCallExpression extends Expression {
 	 * <br>
 	 * and continues with the given {@code continuation}.
 	 *
-	 * @param where the method or constructor where this expression occurs
 	 * @param continuation the continuation to be executed after this command
 	 * @return the code executing this command and then {@code continuation}
 	 */
 
 	@Override
-	public Block translate(CodeSignature where, Block continuation) {
+	public Block translate(Block continuation) {
 		// we put an instruction which calls the method
 		continuation = new VIRTUALCALL((ClassType) receiver.getStaticType(), method)
 			.followedBy(continuation);
 
 		// we translate the actual parameters
 		if (actuals != null)
-			continuation = actuals.translateAs(where, method.getParameters(), continuation);
+			continuation = actuals.translateAs(method.getParameters(), continuation);
 
 		// we translate the receiver of the call
-		return receiver.translate(where, continuation);
+		return receiver.translate(continuation);
 	}
 }

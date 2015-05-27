@@ -14,7 +14,7 @@ import org.apache.bcel.generic.InstructionList;
  * @author <A HREF="mailto:fausto.spoto@univr.it">Fausto Spoto</A>
  */
 
-public class NEWSTRING extends NonCallingSequentialBytecode {
+public class NEWSTRING extends SequentialBytecode {
 
 	/**
 	 * The lexical value of the string that is created.

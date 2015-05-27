@@ -2,7 +2,6 @@ package absyn;
 
 import java.io.FileWriter;
 
-import types.CodeSignature;
 import semantical.TypeChecker;
 import translation.Block;
 
@@ -96,13 +95,12 @@ public class CommandSeq extends Command {
 	 * translates the first command by using as continuation the translation of
 	 * the second command by using the given {@code continuation}.
 	 *
-	 * @param where the method or constructor where this expression occurs
 	 * @param continuation the continuation to be executed after this sequence of commands
 	 * @return the code executing this sequence of commands and then {@code continuation}
 	 */
 
 	@Override
-	public Block translate(CodeSignature where, Block continuation) {
-		return first.translate(where,second.translate(where,continuation));
+	public Block translate(Block continuation) {
+		return first.translate(second.translate(continuation));
 	}
 }

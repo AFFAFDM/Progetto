@@ -2,7 +2,6 @@ package absyn;
 
 import semantical.TypeChecker;
 import translation.Block;
-import types.CodeSignature;
 import types.FloatType;
 import types.Type;
 import bytecode.CONST;
@@ -79,14 +78,13 @@ public class FloatLiteral extends Literal {
 	 * literal expression) followed by the given {@code continuation}.
 	 * The original stack elements are not modified.
 	 *
-	 * @param where the method or constructor where this expression occurs
 	 * @param continuation the code executed after this expression
 	 * @return the code that evaluates this expression and continues
 	 *         with {@code continuation}
 	 */
 
 	@Override
-	public Block translate(CodeSignature where, Block continuation) {
+	public Block translate(Block continuation) {
 		return new CONST(value).followedBy(continuation);
 	}
 }

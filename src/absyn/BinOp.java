@@ -2,10 +2,9 @@ package absyn;
 
 import java.io.FileWriter;
 
-import types.Type;
-import types.CodeSignature;
-import bytecode.BinOpBytecode;
 import translation.Block;
+import types.Type;
+import bytecode.BinOpBytecode;
 
 /**
  * A node of abstract syntax representing a binary operation between two expressions.
@@ -89,19 +88,17 @@ public abstract class BinOp extends Expression {
 	 * followed by the given {@code continuation}.
 	 * The original stack elements are not modified.
 	 *
-	 * @param where the method or constructor where this expression occurs
 	 * @param continuation the code executed after this expression
 	 * @return the code that evaluates this expression and continues
 	 *         with {@code continuation}
 	 */
 
 	@Override
-	public final Block translate(CodeSignature where, Block continuation) {
+	public final Block translate(Block continuation) {
 		Type type = getLeft().getStaticType().leastCommonSupertype(getRight().getStaticType());
 
 		return getLeft().translateAs
-			(where, type,getRight().translateAs
-				(where, type, operator(type).followedBy(continuation)));
+			(type, getRight().translateAs(type, operator(type).followedBy(continuation)));
 	}
 
 	/**

@@ -2,7 +2,6 @@ package absyn;
 
 import java.io.FileWriter;
 
-import types.CodeSignature;
 import semantical.TypeChecker;
 import translation.Block;
 
@@ -155,24 +154,21 @@ public class IfThenElse extends Command {
 	 * the code for the compilation of {@link #then} or {@link #_else}.
 	 * It then continues with {@code continuation}.
 	 *
-	 * @param where the method or constructor where this expression occurs
 	 * @param continuation the continuation to be executed after this command
 	 * @return the code executing this command and then
 	 *         the {@code continuation}
 	 */
 
 	@Override
-	public Block translate(CodeSignature where, Block continuation) {
+	public Block translate(Block continuation) {
 		// by making the continuation unmergeable with whatever we
 		// prefix to it, we avoid duplicating it in the then and
 		// else branch. This is just an optimisation!
 		// Try removing this line: everything will work, but the code will be larger
 		continuation.doNotMerge();
 
-		// we compile the condition by using as <tt>yes</tt> and <tt>no</tt>
-		// continuations the translations of the <tt>then</tt> and
-		// <tt>_else</tt> components
-		return condition.translateAsTest
-			(where, then.translate(where, continuation), _else.translate(where, continuation));
+		// we compile the condition by using, as yes and no continuations,
+		// the translations of the "then" and "_else" components
+		return condition.translateAsTest(then.translate(continuation), _else.translate(continuation));
 	}
 }

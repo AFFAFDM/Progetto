@@ -87,9 +87,9 @@ public class EQ extends ComparisonBinOpBytecode {
 	public InstructionList generateJavaBytecode(JavaClassGenerator classGen) {
 		InstructionList il = new InstructionList(InstructionFactory.NOP);
 
-		InstructionHandle follow = il.getStart();
+		InstructionHandle end = il.getStart();
 		InstructionHandle after = il.insert(InstructionFactory.ICONST_1);
-		il.insert(new org.apache.bcel.generic.GOTO(follow));
+		il.insert(new org.apache.bcel.generic.GOTO(end));
 		il.insert(InstructionFactory.ICONST_0);
 
 		if (getType() == IntType.INSTANCE || getType() == BooleanType.INSTANCE)

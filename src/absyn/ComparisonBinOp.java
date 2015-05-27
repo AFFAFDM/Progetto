@@ -1,7 +1,6 @@
 package absyn;
 
 import translation.Block;
-import types.CodeSignature;
 import types.Type;
 import bytecode.ComparisonBinOpBytecode;
 
@@ -33,7 +32,6 @@ public abstract class ComparisonBinOp extends BinOp {
 	 * Translates this expression by routing control to one of two possible
 	 * destinations, through an {@code ifcmp} bytecode.
 	 *
-	 * @param where the method or constructor where this expression occurs
 	 * @param yes the continuation which is the <i>yes</i> destination
 	 * @param no the continuation which is the <i>no</i> destination
 	 * @return the code which evaluates the expression and on the basis
@@ -42,11 +40,11 @@ public abstract class ComparisonBinOp extends BinOp {
 	 */
 
 	@Override
-	public Block translateAsTest(CodeSignature where, Block yes, Block no) {
+	public Block translateAsTest(Block yes, Block no) {
 		// we compute the least common supertype of the two sides of this binary expression
 		Type type = getLeft().getStaticType().leastCommonSupertype(getRight().getStaticType());
 
-		return getLeft().translateAs(where, type,getRight().translateAs(where, type,
+		return getLeft().translateAs(type,getRight().translateAs(type,
 			(new Block(((ComparisonBinOpBytecode) operator(type)).toBranching(), yes, no))));
 	}
 }

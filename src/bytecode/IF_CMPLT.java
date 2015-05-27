@@ -70,6 +70,6 @@ public class IF_CMPLT extends BranchingNumericalComparisonBytecode {
 
 	@Override
 	protected void generateJavaBytecodeAux(InstructionList il, JavaClassGenerator classGen, InstructionHandle yes) {
-		getType().JB_if_cmplt(il,yes);
+		getType().JB_if_cmplt(il, yes);
 	}
 }

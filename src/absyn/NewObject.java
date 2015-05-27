@@ -6,7 +6,6 @@ import java.util.Set;
 import semantical.TypeChecker;
 import translation.Block;
 import types.ClassType;
-import types.CodeSignature;
 import types.ConstructorSignature;
 import types.Type;
 import types.TypeList;
@@ -168,16 +167,15 @@ public class NewObject extends Expression {
 	 * <br>
 	 * followed by the given {@code continuation}.
 	 *
-	 * @param where the method or constructor where this expression occurs
 	 * @param continuation the continuation to be executed after this command
 	 * @return the code executing this command and then {@code continuation}
 	 */
 
 	@Override
-	public Block translate(CodeSignature where, Block continuation) {
+	public Block translate(Block continuation) {
 		continuation = new CONSTRUCTORCALL(constructor).followedBy(continuation);
 		if (actuals != null)
-			continuation = actuals.translateAs(where, constructor.getParameters(), continuation);
+			continuation = actuals.translateAs(constructor.getParameters(), continuation);
 
 		return new NEW(constructor.getDefiningClass()).followedBy
 			(new DUP(constructor.getDefiningClass()).followedBy(continuation));

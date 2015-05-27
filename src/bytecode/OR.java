@@ -14,7 +14,7 @@ import org.apache.bcel.generic.InstructionList;
  * @author <A HREF="mailto:fausto.spoto@univr.it">Fausto Spoto</A>
  */
 
-public class OR extends BinOpBytecode {
+public class OR extends BooleanBinOpBytecode {
 
 	/**
 	 * Constructs a bytecode that performs a logical <i>or</i> operation

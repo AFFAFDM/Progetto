@@ -106,20 +106,14 @@ public final class ClassType extends ReferenceType {
 		// we record this object for future lookup
 		memory.put(name, this);
 	
-		// we have not type-checked this class yet
-		this.typeChecked = false;
-	
-		ClassDefinition abstractSyntax;
-		ClassType superclass;
-	
 		// we perform lexical and syntactical analysis. The result is
 		// the abstract syntax of this class definition
+		ClassDefinition abstractSyntax;
+
 		try {
 			Parser parser = new Parser(new Lexer(name));
 			errorMsg = parser.getErrorMsg();
 			abstractSyntax = (ClassDefinition) parser.parse().value;
-			// we add the fields, constructors and methods of this class
-			abstractSyntax.addMembersTo(this);
 		}
 		catch (Exception e) {
 			// there is a syntax error in the class text or the same class
@@ -130,19 +124,19 @@ public final class ClassType extends ReferenceType {
 			else
 				abstractSyntax = new ClassDefinition(0, name, "Object", null);
 		}
-	
-		if (!name.equals("Object"))
-			// if this is not Object, we create its superclass also and take
-			// note that we are a direct subclass of our superclass
-			(superclass = mk(abstractSyntax.getSuperclassName())).subclasses.add(this);
-		else {
-			// otherwise we take note of the top of the hierarchy of the reference types
+
+		// we add the fields, constructors and methods of this class
+		(this.abstractSyntax = abstractSyntax).addMembersTo(this);
+
+		if (name.equals("Object")) {
+			// if this is Object, we take note of the top of the hierarchy of the reference types
 			setObjectType(this);
 			superclass = null;
 		}
-
-		this.abstractSyntax = abstractSyntax;
-		this.superclass = superclass;
+		else
+			// if this is not Object, we also create its superclass and take
+			// note that we are a direct subclass of our superclass
+			(superclass = mk(abstractSyntax.getSuperclassName())).subclasses.add(this);
 	}
 
 	/**
@@ -229,21 +223,15 @@ public final class ClassType extends ReferenceType {
 		// between a class type and an array type, the least common supertype is Object
 		if (other instanceof ArrayType)
 			return getObjectType();
-		else if (other instanceof ClassType) {
+		else if (other instanceof ClassType)
 			// we look in our superclasses for a superclass of other
-			for (ClassType cursor = this; cursor != null; cursor = cursor.getSuperclass())
+			for (ClassType cursor = this; ; cursor = cursor.superclass)
 				if (other.canBeAssignedTo(cursor))
 					return cursor;
 
-			// last chance, always valid
-			return getObjectType();
-		}
-		// the supertype of a class type and null or an unused type is the class itself
-		else if (other == NilType.INSTANCE || other == UnusedType.INSTANCE)
-			return this;
+		// the supertype of a class type and null or an unused type is the class itself,
 		// otherwise, there is no common supertype
-		else
-			return null;
+		return other == NilType.INSTANCE || other == UnusedType.INSTANCE ? this : null;
 	}
 
 	/**

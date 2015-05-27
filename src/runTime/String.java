@@ -16,8 +16,13 @@ public class String {
 	}
 
 	/* clones a string */
-	public String(java.lang.String other) {
-		value = other;
+	public String(String other) {
+		value = other.value;
+	}
+
+	/* clones a Java string */
+	public String(java.lang.String value) {
+		this.value = value;
 	}
 
 	/* yields the length of a string */
@@ -83,5 +88,9 @@ public class String {
 	/* yields the concatenation of "this" and then "b" */
 	public String concat(boolean b) {
 		return new String(value + b);
+	}
+
+	public String substring(int start, int end) {
+		return new String(value.substring(start, end));
 	}
 }

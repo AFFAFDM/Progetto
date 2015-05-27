@@ -84,18 +84,18 @@ public class ConstructorSignature extends CodeSignature {
 		}
 
 		// we create a method generator: constructors are just methods
-		// in Java bytecode, with special name <tt><init></tt>
+		// in Java bytecode, with special name <init>
 		MethodGen methodGen = new MethodGen
 			(Constants.ACC_PUBLIC, // public
 			org.apache.bcel.generic.Type.VOID, // return type
 			getParameters().toBCEL(), // parameters types, if any
 			null, // parameters names: we do not care
-			Constants.CONSTRUCTOR_NAME, // <tt><init></tt>
+			Constants.CONSTRUCTOR_NAME, // <init>
 			classGen.getClassName(), // name of the class
 			il, // bytecode of the constructor
 			classGen.getConstantPool()); // constant pool
 
-		// we must always call these methods before the <tt>getMethod()</tt>
+		// we must always call these methods before the getMethod()
 		// method below. They set the number of local variables and stack
 		// elements used by the code of the method
 		methodGen.setMaxStack();

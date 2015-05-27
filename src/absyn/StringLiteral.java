@@ -1,10 +1,9 @@
 package absyn;
 
-import types.Type;
-import types.ClassType;
-import types.CodeSignature;
 import semantical.TypeChecker;
 import translation.Block;
+import types.ClassType;
+import types.Type;
 import bytecode.NEWSTRING;
 
 /**
@@ -90,12 +89,12 @@ public class StringLiteral extends Literal {
 	 * literal expression) followed by the given {@code continuation}.
 	 * The original stack elements are not modified.
 	 *
-	 * @param where the method or constructor where this expression occurs
 	 * @param continuation the code executed after this expression
 	 * @return the code which evaluates this expression and continues with {@code continuation}
 	 */
 
-	public Block translate(CodeSignature where, Block continuation) {
+	@Override
+	public Block translate(Block continuation) {
 		return new NEWSTRING(value).followedBy(continuation);
 	}
 }

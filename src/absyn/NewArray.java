@@ -2,11 +2,10 @@ package absyn;
 
 import java.io.FileWriter;
 
-import types.Type;
-import types.ArrayType;
-import types.CodeSignature;
 import semantical.TypeChecker;
 import translation.Block;
+import types.ArrayType;
+import types.Type;
 import bytecode.NEWARRAY;
 
 /**
@@ -109,13 +108,12 @@ public class NewArray extends Expression {
 	 * <br>
 	 * and continues with the given {@code continuation}.
 	 *
-	 * @param where the method or constructor where this expression occurs
 	 * @param continuation the continuation to be executed after this command
 	 * @return the code executing this command and then {@code continuation}
 	 */
 
 	@Override
-	public Block translate(CodeSignature where, Block continuation) {
-		return size.translate(where, new NEWARRAY(elementsType.getStaticType()).followedBy(continuation));
+	public Block translate(Block continuation) {
+		return size.translate(new NEWARRAY(elementsType.getStaticType()).followedBy(continuation));
 	}
 }

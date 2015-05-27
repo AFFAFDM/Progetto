@@ -15,7 +15,7 @@ import types.ClassType;
  * @author <A HREF="mailto:fausto.spoto@univr.it">Fausto Spoto</A>
  */
 
-public class NEW extends NonCallingSequentialBytecode {
+public class NEW extends SequentialBytecode {
 
 	/**
 	 * The class type that is instantiated by this bytecode.

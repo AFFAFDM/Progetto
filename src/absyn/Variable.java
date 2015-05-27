@@ -2,10 +2,9 @@ package absyn;
 
 import java.io.FileWriter;
 
-import types.Type;
-import types.CodeSignature;
 import semantical.TypeChecker;
 import translation.Block;
+import types.Type;
 import bytecode.LOAD;
 import bytecode.STORE;
 
@@ -100,13 +99,12 @@ public class Variable extends Lvalue {
 	 * bytecode that loads on the stack the value of this variable, and
 	 * continues with the given {@code continuation}.
 	 *
-	 * @param where the method or constructor where this expression occurs
 	 * @param continuation the code executed after this expression
 	 * @return the code that evaluates this expression and continues with {@code continuation}
 	 */
 
 	@Override
-	public Block translate(CodeSignature where, Block continuation) {
+	public Block translate(Block continuation) {
 		return new LOAD(getVarNum(), getStaticType()).followedBy(continuation);
 	}
 
@@ -115,13 +113,12 @@ public class Variable extends Lvalue {
 	 * the evaluation of the rightvalue which is going to be assigned to this
 	 * variable. There is nothing to generate in this case.
 	 *
-	 * @param where the method or constructor where this expression occurs
 	 * @param continuation the code that must be executed after this expression
 	 * @return {@code continuation} itself
 	 */
 
 	@Override
-	public Block translateBeforeAssignment(CodeSignature where, Block continuation) {
+	public Block translateBeforeAssignment(Block continuation) {
 		return continuation;
 	}
 
@@ -130,13 +127,12 @@ public class Variable extends Lvalue {
 	 * the evaluation of the rightvalue which is going to be assigned to this
 	 * variable. Namely, it generates a {@code store} bytecode.
 	 *
-	 * @param where the method or constructor where this expression occurs
 	 * @param continuation the code which must be executed after this expression
 	 * @return a {@code store} bytecode followed by {@code continuation}
 	 */
 
 	@Override
-	public Block translateAfterAssignment(CodeSignature where, Block continuation) {
+	public Block translateAfterAssignment(Block continuation) {
 		return new STORE(getVarNum(), getStaticType()).followedBy(continuation);
 	}
 }

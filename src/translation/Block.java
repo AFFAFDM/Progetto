@@ -103,11 +103,9 @@ public class Block {
 	/**
 	 * Builds a block of code containing {@code nop} and with no
 	 * successors nor predecessors.
-	 *
-	 * @param where the method or constructor where the block will be put
 	 */
 
-	public Block(CodeSignature where) {
+	public Block() {
 		// we use nop for the initial code of a pivot
 		this(new BytecodeList(new NOP()), new ArrayList<Block>());
 

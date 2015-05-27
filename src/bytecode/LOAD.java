@@ -15,7 +15,7 @@ import types.Type;
  * @author <A HREF="mailto:fausto.spoto@univr.it">Fausto Spoto</A>
  */
 
-public class LOAD extends NonCallingSequentialBytecode {
+public class LOAD extends SequentialBytecode {
 
 	/**
 	 * The number of the local variable which is loaded on the stack.

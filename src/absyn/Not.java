@@ -2,11 +2,10 @@ package absyn;
 
 import java.io.FileWriter;
 
-import types.BooleanType;
-import types.Type;
-import types.CodeSignature;
 import semantical.TypeChecker;
 import translation.Block;
+import types.BooleanType;
+import types.Type;
 import bytecode.NEG;
 
 /**
@@ -87,14 +86,13 @@ public class Not extends Expression {
 	 * {@code neg} bytecode) followed by the given {@code continuation}.
 	 * The original stack elements are not modified.
 	 *
-	 * @param where the method or constructor where this expression occurs
 	 * @param continuation the code executed after this expression
 	 * @return the code which evaluates this expression and continues
 	 *         with {@code continuation}
 	 */
 
 	@Override
-	public Block translate(CodeSignature where, Block continuation) {
-		return expression.translate(where, new NEG(BooleanType.INSTANCE).followedBy(continuation));
+	public Block translate(Block continuation) {
+		return expression.translate(new NEG(BooleanType.INSTANCE).followedBy(continuation));
 	}
 }

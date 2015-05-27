@@ -3,9 +3,8 @@ package absyn;
 import java.io.FileWriter;
 
 import semantical.TypeChecker;
-import types.Type;
-import types.CodeSignature;
 import translation.Block;
+import types.Type;
 import bytecode.STORE;
 
 /**
@@ -152,17 +151,16 @@ public class LocalDeclaration extends Command {
 	 * Kitten bytecode. Namely, it returns a code which starts with<br>
 	 * <br>
 	 * <i>translation of {@link #initialiser}</i><br>
-	 * <tt>store varNum of type varType</tt><br>
+	 * {@code store varNum of type varType}<br>
 	 * <br>
 	 * and continues with the {@code continuation}.
 	 *
-	 * @param where the method or constructor where this expression occurs
 	 * @param continuation the continuation to be executed after this command
 	 * @return the code executing this command and then the {@code continuation}
 	 */
 
 	@Override
-	public Block translate(CodeSignature where, Block continuation) {
+	public Block translate(Block continuation) {
 		// we get the number and type of the variable
 		int varNum = getTypeChecker().getVarNum(name);
 		Type staticType = type.getStaticType();
@@ -170,6 +168,6 @@ public class LocalDeclaration extends Command {
 		// we return a code which starts with the translation of the initialising expression,
 		// followed by the STORE bytecode, followed by the continuation
 		return initialiser.translateAs
-			(where, staticType, new STORE(varNum, staticType).followedBy(continuation));
+			(staticType, new STORE(varNum, staticType).followedBy(continuation));
 	}
 }

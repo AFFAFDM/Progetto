@@ -5,7 +5,6 @@ import java.io.IOException;
 
 import semantical.TypeChecker;
 import translation.Block;
-import types.CodeSignature;
 import types.TypeList;
 
 /**
@@ -113,7 +112,6 @@ public class ExpressionSeq extends Absyn {
 	 * This methods calls itself recursively on {@link #tail} and then calls
 	 * {@code absyn.Expression.translateAs} on {@link #head}.
 	 *
-	 * @param where the method or constructor where this expression occurs
 	 * @param types the list of types of the values which must be left onto the
 	 *              stack by the translation of this sequence of expressions
 	 * @param continuation the code which must follow the translation of
@@ -122,8 +120,8 @@ public class ExpressionSeq extends Absyn {
 	 *         continues with {@code continuation}
 	 */
 
-	public Block translateAs(CodeSignature where, TypeList types, Block continuation) {
-		return head.translateAs(where, types.getHead(),
-			tail != null ? tail.translateAs(where, types.getTail(), continuation) : continuation);
+	public Block translateAs(TypeList types, Block continuation) {
+		return head.translateAs(types.getHead(),
+			tail != null ? tail.translateAs(types.getTail(), continuation) : continuation);
 	}
 }

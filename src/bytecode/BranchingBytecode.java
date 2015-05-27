@@ -46,7 +46,7 @@ public abstract class BranchingBytecode extends Bytecode implements NonCallingBy
 	public final InstructionList generateJavaBytecode(JavaClassGenerator classGen, InstructionHandle yes, InstructionHandle no) {
 		InstructionList il = new InstructionList();
 
-		// builds the instructions which go to yes if the test is true
+		// builds the instructions that go to yes if the test is true
 		generateJavaBytecodeAux(il, classGen, yes);
 
 		il.append(new org.apache.bcel.generic.GOTO(no));

@@ -121,7 +121,7 @@ public abstract class CodeDeclaration extends ClassMemberDeclaration {
     		// precaution is useless since we know that every execution path
     		// ends with a return command, as guaranteed by
     		// checkForDeadCode() (see typeCheck() in MethodDeclaration.java)
-    		sig.setCode(getBody().translate(sig, new Block(new RETURN(VoidType.INSTANCE))));
+    		sig.setCode(getBody().translate(new Block(new RETURN(VoidType.INSTANCE))));
 
     		// we translate all methods and constructors that are referenced
     		// from the code we have generated
@@ -151,7 +151,7 @@ public abstract class CodeDeclaration extends ClassMemberDeclaration {
     		else if (h instanceof PUTFIELD)
     			done.add(((PUTFIELD) h).getField());
     		else if (h instanceof CALL)
-    			for (CodeSignature callee: ((CALL)h).getDynamicTargets())
+    			for (CodeSignature callee: ((CALL) h).getDynamicTargets())
     				callee.getAbstractSyntax().translate(done);
     	}
 

@@ -13,7 +13,7 @@ import org.apache.bcel.generic.InstructionList;
  * @author <A HREF="mailto:fausto.spoto@univr.it">Fausto Spoto</A>
  */
 
-public class NOP extends NonCallingSequentialBytecode {
+public class NOP extends SequentialBytecode {
 
 	/**
 	 * Constructs a bytecode that does not do anything.
@@ -28,6 +28,7 @@ public class NOP extends NonCallingSequentialBytecode {
 	 * @return the Java {@code nop} bytecode
 	 */
 
+	@Override
 	public InstructionList generateJavaBytecode(JavaClassGenerator classGen) {
 		return new InstructionList(InstructionFactory.NOP);
 	}

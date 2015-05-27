@@ -4,7 +4,6 @@ import java.io.FileWriter;
 
 import semantical.TypeChecker;
 import translation.Block;
-import types.CodeSignature;
 import types.Type;
 import types.VoidType;
 import bytecode.RETURN;
@@ -115,13 +114,12 @@ public class Return extends Command {
 	 * if any, and continues with a {@code return} bytecode for the type returned
 	 * by the current method.
 	 *
-	 * @param where the method or constructor where this expression occurs
 	 * @param continuation the continuation to be executed after this command
 	 * @return the code executing this command and then the {@code continuation}
 	 */
 
 	@Override
-	public Block translate(CodeSignature where, Block continuation) {
+	public Block translate(Block continuation) {
 		// we get the type which must be returned by this the current method
 		Type returnType = getTypeChecker().getReturnType();
 
@@ -130,7 +128,7 @@ public class Return extends Command {
 
 		// if there is an initialising expression, we translate it
 		if (returned != null)
-			continuation = returned.translateAs(where, returnType, continuation);
+			continuation = returned.translateAs(returnType, continuation);
 
 		return continuation;
 	}

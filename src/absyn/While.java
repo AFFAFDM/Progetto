@@ -2,7 +2,6 @@ package absyn;
 
 import java.io.FileWriter;
 
-import types.CodeSignature;
 import semantical.TypeChecker;
 import translation.Block;
 
@@ -122,12 +121,12 @@ public class While extends Command {
 	 * the compilation of {@link #body} or with the given {@code continuation}.
 	 * After the {@link #body}, the {@link #condition} is checked again.
 	 *
-	 * @param where the method or constructor where this expression occurs
 	 * @param continuation the continuation to be executed after this command
 	 * @return the code executing this command and then the {@code continuation}
 	 */
 
-	public Block translate(CodeSignature where, Block continuation) {
+	@Override
+	public Block translate(Block continuation) {
 		/* The idea is to translate a while command into the code
 
 	    condition -> (no) continuation
@@ -137,11 +136,11 @@ public class While extends Command {
 		 */
 
 		// we create an empty block which is used to close the loop
-		Block pivot = new Block(where);
+		Block pivot = new Block();
 
 		// we translate the condition of the loop. If the condition is true, we execute
 		// the translation of the body. Otherwise we execute what follows this command
-		Block result = condition.translateAsTest(where, body.translate(where, pivot), continuation);
+		Block result = condition.translateAsTest(body.translate(pivot), continuation);
 
 		result.doNotMerge();
 

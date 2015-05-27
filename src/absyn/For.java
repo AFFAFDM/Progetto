@@ -2,7 +2,6 @@ package absyn;
 
 import java.io.FileWriter;
 
-import types.CodeSignature;
 import semantical.TypeChecker;
 import translation.Block;
 
@@ -152,12 +151,12 @@ public class For extends Command {
      * the given {@code continuation}. After the compilation of {@link #update}, the
      * the {@link #condition} of the loop is checked again.
      *
-     * @param where the method or constructor where this expression occurs
      * @param continuation the continuation to be executed after this command
      * @return the code executing this command and then {@code continuation}
      */
 
-    public Block translate(CodeSignature where, Block continuation) {
+    @Override
+    public Block translate(Block continuation) {
 
     	/* The idea is to translate a for command into the code
 
@@ -168,20 +167,20 @@ public class For extends Command {
     	 */
 
     	// we create an empty block which is used to close the loop
-    	Block pivot = new Block(where);
+    	Block pivot = new Block();
 
     	// we translate the condition of the loop. If the condition is true,
     	// we execute the translation of the body and then the update.
     	// Otherwise we execute what follows this command. This code will be
     	// used to translate the initialisation component
     	Block test = condition.translateAsTest
-   			(where, body.translate(where, update.translate(where, pivot)), continuation);
+   			(body.translate(update.translate(pivot)), continuation);
 
     	test.doNotMerge();
 
     	// we link the pivot to the code for the test, so that we close the loop
     	pivot.linkTo(test);
 
-    	return initialisation.translate(where,test);
+    	return initialisation.translate(test);
     }
 }

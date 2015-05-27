@@ -181,13 +181,12 @@ public abstract class Expression extends Absyn {
 	 * the value of the expression (the original stack elements are not
 	 * modified) followed by a {@code continuation}
 	 *
-	 * @param where the method or constructor where this expression occurs
 	 * @param continuation the code executed after this expression
 	 * @return the code which evaluates this expression and continues
 	 *         with {@code continuation}
 	 */
 
-	public abstract Block translate(CodeSignature where, Block continuation);
+	public abstract Block translate(Block continuation);
 
 	/**
 	 * Translates this expression by requiring that it leaves onto the
@@ -195,7 +194,6 @@ public abstract class Expression extends Absyn {
 	 * {@link #translate(CodeSignature, Block)} is that it checks if
 	 * the value left on top of the stack needs a type promotion.
 	 *
-	 * @param where the method or constructor where this expression occurs
 	 * @param type the type of the value which must be left onto the
 	 *             stack by the translation of this expression
 	 * @param continuation the continuation to be executed after this expression
@@ -203,12 +201,12 @@ public abstract class Expression extends Absyn {
 	 *         possible type promotion to {@code type}, if needed
 	 */
 
-	public final Block translateAs(CodeSignature where, Type type, Block continuation) {
+	public final Block translateAs(Type type, Block continuation) {
 		if (staticType == IntType.INSTANCE && type == FloatType.INSTANCE)
 			// type promotion
 			continuation = new CAST(IntType.INSTANCE, FloatType.INSTANCE).followedBy(continuation);
 
-		return translate(where, continuation);
+		return translate(continuation);
 	}
 
 	/**
@@ -218,7 +216,6 @@ public abstract class Expression extends Absyn {
 	 * to one of two possible destinations, through an {@code if_true}
 	 * bytecode. Subclasses may redefine to get more improved code.
 	 *
-	 * @param where the method or constructor where this expression occurs
 	 * @param yes the continuation that is the <i>yes</i> destination
 	 * @param no the continuation that is the <i>no</i> destination
 	 * @return the code that evaluates the expression and, on the basis
@@ -226,8 +223,8 @@ public abstract class Expression extends Absyn {
 	 *         {@code yes} or {@code no} continuation, respectively
 	 */
 
-	public Block translateAsTest(CodeSignature where, Block yes, Block no) {
-		return translate(where, new Block(new IF_TRUE(), yes, no));
+	public Block translateAsTest(Block yes, Block no) {
+		return translate(new Block(new IF_TRUE(), yes, no));
 	}
 
 	/**
