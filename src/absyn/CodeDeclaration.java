@@ -5,11 +5,15 @@ import java.util.Set;
 
 import translation.Block;
 import types.ClassMemberSignature;
+import types.ClassType;
 import types.CodeSignature;
+import types.FixtureSignature;
+import types.TestSignature;
 import types.VoidType;
 import bytecode.Bytecode;
 import bytecode.BytecodeList;
 import bytecode.CALL;
+import bytecode.FieldAccessBytecode;
 import bytecode.GETFIELD;
 import bytecode.PUTFIELD;
 import bytecode.RETURN;
@@ -151,12 +155,35 @@ public abstract class CodeDeclaration extends ClassMemberDeclaration {
     		else if (h instanceof PUTFIELD)
     			done.add(((PUTFIELD) h).getField());
     		else if (h instanceof CALL)
-    			for (CodeSignature callee: ((CALL) h).getDynamicTargets())
+    			for (CodeSignature callee: ((CALL)h).getDynamicTargets())
     				callee.getAbstractSyntax().translate(done);
+    		
+    		translateTestsAndFixtures(h, done);
     	}
 
     	// we continue with the following blocks
     	for (Block follow: block.getFollows())
     		translateReferenced(follow, done, blocksDone);
+    }
+  
+    private void translateTestsAndFixtures(Bytecode bytecode, Set<ClassMemberSignature> done) {
+    	
+    	if (bytecode instanceof FieldAccessBytecode) {
+    		
+    		ClassType clazz = ((FieldAccessBytecode) bytecode).getField().getDefiningClass();
+    		
+    		translateTestsAndFixturesAux(clazz, done);
+    		
+    	} else if (bytecode instanceof CALL)    		
+    		for (CodeSignature callee : ((CALL) bytecode).getDynamicTargets()) 
+    			translateTestsAndFixturesAux(callee.getDefiningClass(), done);
+    }
+    
+    private void translateTestsAndFixturesAux(ClassType clazz, Set<ClassMemberSignature> done) {
+    	for (TestSignature t : clazz.getTests().values()) 
+			t.getAbstractSyntax().translate(done);
+    	
+		for (FixtureSignature f : clazz.getFixtures()) 
+			f.getAbstractSyntax().translate(done);
     }
 }

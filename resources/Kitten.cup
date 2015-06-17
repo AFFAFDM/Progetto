@@ -164,8 +164,8 @@ class_members ::=
 	(mleft, returnType, name, formals, body, next); :}
    | TEST:t ID:name com:body class_members:next 
      {: RESULT = new TestDeclaration(tleft,name,body,next); :}
-   | FIXTURE:f com:c class_members:next
-   	 {: RESULT = null; :};
+   | FIXTURE:f com:body class_members:next
+   	 {: RESULT = new FixtureDeclaration(fleft, body, next); :};
 
 // a comma-separated and possibly empty list
 // of formal parameters of a method or constructor

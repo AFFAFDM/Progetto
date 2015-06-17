@@ -1,0 +1,39 @@
+class Scramble{
+
+  field int[] arr
+  field int len
+  
+  constructor(int[] a, int l){
+    this.arr:=a;
+    this.len:=l
+ }
+ 
+  method void scramble(int[] perm, int rest){
+  
+  	if (rest = 1) then this.print(tmp, this.len)
+    else{
+    	for(int i:=0;i<this.len;i:=i+1){
+	    	tmp[this.len - rest ]:=this.arr[i];/*should be swap*/
+	    	this.scramble(tmp, rest-1)    	}
+    }
+    
+  }
+  
+  
+  method void print(int[] a, int len){
+    for(int i:=0;i<len;i:=i+1)
+   		new String().concat(a[i]).output(); 
+  	"\n".output()
+  }
+  
+   method void main(){
+   int[] tmp:= new int[4];
+   tmp[0]:=0;
+   tmp[1]:=1;
+   tmp[2]:=2;
+   tmp[3]:=3;
+   Scramble scr := new Scramble(tmp, 4);
+   scr.scramble(scr.arr, scr.len)
+   }
+  
+}

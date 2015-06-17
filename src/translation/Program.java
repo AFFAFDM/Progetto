@@ -4,11 +4,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
-import javaBytecodeGenerator.JavaClassGenerator;
+import javaBytecodeGenerator.JavaNormalClassGenerator;
+import javaBytecodeGenerator.TestClassGenerator;
 
 import types.ClassMemberSignature;
-import types.CodeSignature;
 import types.ClassType;
+import types.CodeSignature;
 import bytecode.Bytecode;
 import bytecode.CALL;
 import bytecode.FieldAccessBytecode;
@@ -175,10 +176,24 @@ public class Program {
 		// we consider one class at the time and we generate its Java bytecode
 		for (ClassType clazz: ClassType.getAll())
 			try {
-				new JavaClassGenerator(clazz, sigs).getJavaClass().dump(clazz + ".class");
+				new JavaNormalClassGenerator(clazz, sigs).getJavaClass().dump(clazz + ".class");
 			}
 			catch (IOException e) {
 				System.out.println("Could not dump the Java bytecode for class " + clazz);
+			}
+	}
+	
+	public void generateJavaBytecodeForTests(){
+
+		for (ClassType clazz: ClassType.getAll())
+			//deve esserci almeno un test nella classe
+			if(!clazz.getTests().isEmpty()){
+				try {
+					new TestClassGenerator(clazz, sigs).getJavaClass().dump(clazz + "Test.class");
+				}
+				catch (IOException e) {
+					System.out.println("Could not dump the Java bytecode for class " + clazz + "Test");
+				}
 			}
 	}
 

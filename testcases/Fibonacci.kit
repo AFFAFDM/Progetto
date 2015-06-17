@@ -1,6 +1,8 @@
 class Fibonacci {
-  constructor() {}
 
+  constructor() {}
+   
+   
   method int fib(int n)
     if (n = 0 | n = 1) then return 1
     else return this.fib(n - 1) + this.fib(n - 2)
@@ -8,39 +10,29 @@ class Fibonacci {
   method void main() {
     String s := new String();
 
-    "Insert a relatively small number: ".output();
+  
     s.input();
     "Fibonacci(".concat(s).concat(") = ".concat(new Fibonacci().fib(s.toInt()))).output();
     "\n".output()
   }
 
-   test prova{
-  		assert(4)
-  	}
+	test prova1 {
+	   		assert(false)
+	   }
+	   
+	test prova2 {
+	   		assert(false)
+	   }
+  
+  test prova3 {
+  	int result := this.fib(0);
   	
-   test prova2{
-   		assert("pippo")
-   }	
-   
-   test prova3{
-   		assert(true)
-   }
- 
-   test prova3{
-   		assert(true)
-   }  
-   
-   
-   
-   
-   
-  	fixture n:=2
-  	
-  	fixture{
-  		 n:= 0;
-  		 m := n + 3
-  	} 
-  	
- 
-
+	assert( result = 1 )
+  }
+  
+  fixture { 
+  	int j := 3;
+  	j := j+1
+  }
+  
 }

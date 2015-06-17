@@ -5,11 +5,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import types.ClassType;
 import types.CodeSignature;
+import types.FixtureSignature;
+import types.TestSignature;
 import bytecode.BranchingBytecode;
 import bytecode.Bytecode;
 import bytecode.BytecodeList;
 import bytecode.CALL;
+import bytecode.FieldAccessBytecode;
 import bytecode.FinalBytecode;
 import bytecode.NOP;
 
@@ -239,7 +243,6 @@ public class Block {
 	 * @param done the set of blocks which have been already cleaned-up
 	 * @param program the program which is being cleaned-up
 	 */
-
 	private void cleanUp(Set<Block> done, Program program) {
 		if (!done.contains(this)) {
 			done.add(this);
@@ -273,7 +276,36 @@ public class Block {
 					// we continue by cleaning the dynamic targets
 					for (CodeSignature target: ((CALL) bytecode).getDynamicTargets())
 						target.getCode().cleanUp(done,program);
+				
+				cleanupTestsAndFixtures(bytecode, done, program);
+				
 			}
+		}
+	}
+	
+	private void cleanupTestsAndFixtures(Bytecode bytecode, Set<Block> done, Program program) {
+		if (bytecode instanceof FieldAccessBytecode) {
+			
+			ClassType clazz = ((FieldAccessBytecode) bytecode).getField().getDefiningClass();
+			
+			cleanupTestsAndFixturesAux(clazz, done, program);
+			
+		} else if (bytecode instanceof CALL) 
+			for (CodeSignature target: ((CALL) bytecode).getDynamicTargets())
+				cleanupTestsAndFixturesAux(target.getDefiningClass(), done, program);
+		
+	}
+	
+	private void cleanupTestsAndFixturesAux(ClassType clazz, Set<Block> done, Program program) {
+		
+		for (TestSignature t : clazz.getTests().values()) {
+			t.getCode().cleanUp(done, program);
+			program.getSigs().add(t);
+		}
+		
+		for (FixtureSignature f : clazz.getFixtures()) {
+			f.getCode().cleanUp(done, program);
+			program.getSigs().add(f);
 		}
 	}
 }

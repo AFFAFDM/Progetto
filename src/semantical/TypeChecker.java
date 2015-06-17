@@ -167,4 +167,9 @@ public class TypeChecker {
 	public boolean anyErrors() {
 		return errorMsg.anyErrors();
 	}
+	
+	public String getErrorPosition(int pos){
+		return errorMsg.getErrorPosition(pos);
+		
+	}
 }
